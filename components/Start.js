@@ -33,7 +33,7 @@ export default class Start extends React.Component {
         <ImageBackground source={BackgroundImage} resizeMode='cover' style={styles.backgroundImage}>
 
           <View style={styles.titleBox}> 
-            <Text style={styles.title}>Welcome to the Chat App!</Text> 
+            <Text style={styles.title}>Welcome to ChatterBot!</Text> 
           </View>
 
           <View style={styles.box1}>
@@ -78,7 +78,7 @@ export default class Start extends React.Component {
                 })}>
                 <Text style={styles.buttonText}>Start Chatting</Text>
             </Pressable>
-            
+
           </View>
 
         </ImageBackground>
