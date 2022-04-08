@@ -38,9 +38,11 @@ export default class Chat extends React.Component {
     }
 
   componentDidMount() {
+    //sets user name at top of screen
     const name = this.props.route.params.name;
     this.props.navigation.setOptions({ title: name});
 
+    //authentication
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         firebase.auth().signInAnonymously();
@@ -65,9 +67,9 @@ export default class Chat extends React.Component {
 
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
-    // go through each document
+    // goes through each document
     querySnapshot.forEach((doc) => {
-      // get the QueryDocumentSnapshot's data
+      // gets the QueryDocumentSnapshot's data
       let data = doc.data();
       messages.push({
         _id: data._id, 
@@ -107,11 +109,10 @@ export default class Chat extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.state.isConnected) {
       this.authUnsubscribe();
       this.unsubscribe();
     }
-  }
+  
 
   renderBubble(props) {
     return (
@@ -143,7 +144,9 @@ export default class Chat extends React.Component {
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           user={{
-            _id: 1,
+            _id: this.state.user._id,
+            name: this.state.name,
+            avatar: this.state.user.avatar
           }}
         />
         {Platform.OS === "android" ? (
