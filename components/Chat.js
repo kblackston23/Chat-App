@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Platform, KeyboardAvoidingView, LogBox } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import * as firebase from 'firebase';
 import "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
+
 
 
 export default class Chat extends React.Component {
@@ -19,7 +22,9 @@ export default class Chat extends React.Component {
         name: "",
         avatar: "",
       },
-      isConnected: false
+      isConnected: false,
+      image: null,
+      location: null
     };
 
 
@@ -39,7 +44,17 @@ export default class Chat extends React.Component {
 
     //refernces the database
     this.referenceChatMessages = firebase.firestore().collection("messages");
-    }
+    
+    // To remove warning message in the console
+    LogBox.ignoreLogs([
+      "Setting a timer",
+      "Warning: ...",
+      "undefined",
+      "Animated.event now requires a second argument for options",
+      "Console Warning"
+    ]);
+  }
+
 
     async getMessages() {
       let messages = '';
@@ -94,7 +109,7 @@ export default class Chat extends React.Component {
       }
 
     
-       //update user state with currently active user data
+      //update user state with currently active user data
       this.setState({
         uid: user.uid,
         messages: [],
@@ -138,7 +153,9 @@ export default class Chat extends React.Component {
           _id: data.user._id,
           name: data.user.name,
           avatar: data.user.avatar
-        }
+        },
+        image: data.image || null,
+        location: data.location || null
       });
    });
    this.setState({
@@ -152,10 +169,13 @@ export default class Chat extends React.Component {
     const message = this.state.messages[0];
     
     this.referenceChatMessages.add({
+      uid: this.state.uid,
       _id: message._id,
+      text: message.text || "",
       createdAt: message.createdAt,
-      text: message.text,
-      user: this.state.user
+      user: this.state.user,
+      image: message.image || "",
+      location: message.location || null,
     });
   }
 
@@ -165,6 +185,7 @@ export default class Chat extends React.Component {
       messages: GiftedChat.append(previousState.messages, messages),
     }), () => {
       this.saveMessages();
+      this.addMessage();
     });
   }
 
@@ -184,7 +205,7 @@ export default class Chat extends React.Component {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#4e5765'
+            backgroundColor: '#293d3d'
           },
           left: {
             backgroundColor: '#e2e5e9'
@@ -205,6 +226,31 @@ export default class Chat extends React.Component {
     }
   }
 
+  renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+  renderCustomView (props) {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+        return (
+            <MapView
+                style={{width: 130,
+                height: 130,
+                margin: 9,
+                }}
+                region={{
+                latitude: currentMessage.location.latitude,
+                longitude: currentMessage.location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+                }}
+            />
+        );
+    }
+    return null;
+  }
+
   render() {
 
     //changes bgcolor on chat screen
@@ -219,6 +265,8 @@ export default class Chat extends React.Component {
           renderInputToolbar={this.renderInputToolbar.bind(this)}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
+          renderActions={this.renderCustomActions}
+          renderCustomView={this.renderCustomView}
           user={{
             _id: this.state.user._id,
             name: this.state.name,

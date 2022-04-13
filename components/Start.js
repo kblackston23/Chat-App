@@ -18,12 +18,12 @@ export default class Start extends React.Component {
     this.setState({ bgColor: newColor });
   };
 
-  // background colors to choose from project brief
+  // background colors to choose
   colors = {
-    dark: '#090C08',
-    purple: '#474056',
-    blue: '#8A95A5',
-    green: '#B9C6AE'
+    darker: '#006666',
+    dark: '#009999',
+    light: '#6bcccc',
+    lighter: '#ccffff'
   };
 
   render() {
@@ -54,19 +54,19 @@ export default class Start extends React.Component {
             <View style={styles.colorArray}>
               <TouchableOpacity 
                 style={styles.color1} 
-                onPress={() => this.changeBgColor(this.colors.dark)}>
+                onPress={() => this.changeBgColor(this.colors.darker)}>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={styles.color2}
-                onPress={() => this.changeBgColor(this.colors.purple)}>
+                onPress={() => this.changeBgColor(this.colors.dark)}>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={styles.color3}
-                onPress={() => this.changeBgColor(this.colors.blue)}>
+                onPress={() => this.changeBgColor(this.colors.light)}>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={styles.color4}
-                onPress={() => this.changeBgColor(this.colors.green)}>
+                onPress={() => this.changeBgColor(this.colors.lighter)}>
               </TouchableOpacity>     
             </View>
 
@@ -82,7 +82,6 @@ export default class Start extends React.Component {
           </View>
 
         </ImageBackground>
-
       </View>
     )
   }
@@ -169,28 +168,28 @@ const styles = StyleSheet.create({
   },
 
   color1: {
-    backgroundColor: '#090C08',
+    backgroundColor: '#006666',
     width: 40,
     height: 40,
     borderRadius: 20
   },
 
   color2: {
-    backgroundColor: '#474056',
+    backgroundColor: '#009999',
     width: 40,
     height: 40,
     borderRadius: 20
   },
 
   color3: {
-    backgroundColor: '#8A95A5',
+    backgroundColor: '#6bcccc',
     width: 40,
     height: 40,
     borderRadius: 20
   },
 
   color4: {
-    backgroundColor: '#B9C6AE',
+    backgroundColor: '#ccffff',
     width: 40,
     height: 40,
     borderRadius: 20
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
   button: {
     width: '88%',
     height: 70,
-    backgroundColor: '#757083',
+    backgroundColor: '#669999',
     alignItems: 'center',
     justifyContent: 'center'
   },
