@@ -1,4 +1,4 @@
-# CHAT APP
+# Chatterbot App
 
 Simple chat application creeated with React Native intended for use on mobile devices. Users can set their name, update the background color of the chat room, send pictures, and chat with friends and family. Users can also send images and their locations to other users. This app will be compatible with a screen reader for users with vision impairment.
 
