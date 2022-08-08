@@ -1,8 +1,8 @@
-CHAT APP
+# CHAT APP
 
 Simple chat application creeated with React Native intended for use on mobile devices. Users can set their name, update the background color of the chat room, send pictures, and chat with friends and family. Users can also send images and their locations to other users. This app will be compatible with a screen reader for users with vision impairment.
 
-User Stories
+## User Stories
 
 - As a new user, I want to be able to easily enter a chat room so I can quickly start talking to my
   friends and family.
@@ -15,7 +15,7 @@ User Stories
 - As a user with a visual impairment, I want to use a chat app that is compatible with a screen
   reader so that I can engage with a chat interface.
 
-Key Features
+## Key Features
 
 - A page where users can enter their name and choose a background color for the chat screen
   before joining the chat.
@@ -24,7 +24,7 @@ Key Features
   and location data.
 - Data gets stored online and offline.
 
-Tools Used
+## Tools Used
 
 - Node.js
 - React Native
@@ -32,12 +32,12 @@ Tools Used
 - Google firebase
 - Gifted Chat
 
-Installation
+## Installation
 
 - Fork or download this repo
 - npm/yarn install int he terminal to install dependencies
 
-How to use
+## How to use
 
 - Download and install app
 - Install Expo globally (npm install --global expo-cli)
